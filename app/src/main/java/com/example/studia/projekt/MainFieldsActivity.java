@@ -10,6 +10,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,15 +31,30 @@ public class MainFieldsActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private SimpleArrayAdapterFields adapter;
     private int userId;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<FieldRecords> fieldRecords;
 
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main_fields);
         setContentView(R.layout.activity_main_fields);
 
-        getSupportActionBar().setTitle("AAA");
+        getSupportActionBar().setTitle("lista działek");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        createList();
+
+
+
+
+
+
+
 
 
         DrawerLayout mDrawerLayout = findViewById(R.id.drawer);
@@ -47,7 +64,14 @@ public class MainFieldsActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         AppDatabase database = AppDatabase.getInstance(getApplicationContext());
 
-        listView = findViewById(R.id.fieldRecordsList); //field records list to nazwa list view
+        //listView = findViewById(R.id.fieldRecordsList); //field records list to nazwa list view
+        mRecyclerView = findViewById(R.id.fieldRecordsList);
+
+//mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new RecyclerViewAdapter(fieldRecords);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
 
         userId = getIntent().getIntExtra("userId", 0); // odczytujemy id uzytkownika
 
@@ -55,14 +79,17 @@ public class MainFieldsActivity extends AppCompatActivity {
                 new Observer<List<FieldRecords>>() {
                     @Override
                     public void onChanged(@Nullable List<FieldRecords> fieldRecords) {
-                        adapter = new SimpleArrayAdapterFields(getApplicationContext(),
-                                (ArrayList<FieldRecords>) fieldRecords);
-                        listView.setAdapter(adapter);
+
+                        buildRecyclerView();
+
+                      //  adapter = new SimpleArrayAdapterFields(getApplicationContext(),
+                        //        (ArrayList<FieldRecords>) fieldRecords);
+                        //listView.setAdapter(adapter);
                     }
                 }
         );
 
-        listView.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+        /*listView.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final FieldRecords item = (FieldRecords) parent.getItemAtPosition(position);
@@ -81,7 +108,7 @@ public class MainFieldsActivity extends AppCompatActivity {
                     String str = "aaa";
                 }
             }
-        }));
+        }));*/
     }
 
     @Override
@@ -118,5 +145,23 @@ public class MainFieldsActivity extends AppCompatActivity {
         Intent intent = new Intent(MainFieldsActivity.this, InfoActivity.class);
         startActivity(intent);
     }
+
+    public void createList(){
+        fieldRecords = new ArrayList<>();
+
+    }
+
+    public void buildRecyclerView(){
+
+        //mRecyclerView.setHasFixedSize(true);
+      //  mLayoutManager = new LinearLayoutManager(this);
+        // mAdapter = new RecyclerViewAdapter(fieldRecords);
+
+      //  mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mRecyclerView.setAdapter(mAdapter);
+
+    }
+
 
 }

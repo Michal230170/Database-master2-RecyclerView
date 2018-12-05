@@ -18,6 +18,7 @@ public class SimpleArrayAdapterFields extends ArrayAdapter<FieldRecords> {
     private final Context context;
     private final ArrayList<FieldRecords> values;
 
+
     public SimpleArrayAdapterFields(Context context, ArrayList<FieldRecords> values) {
         super(context, R.layout.rowlayout, values);
         this.context = context;
