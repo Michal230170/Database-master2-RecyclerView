@@ -32,13 +32,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mTextView1;
         public TextView mTextView2;
+        public TextView mTextView3;
+
 
         public ViewHolder(@NonNull View v, final OnItemClickListener listener) {
             super(v);
 
             mTextView1 = v.findViewById(R.id.number);
-            mTextView2 = v.findViewById(R.id.name);
-
+            mTextView2 = v.findViewById(R.id.area);
+            mTextView3 = v.findViewById(R.id.name);
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,7 +88,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //viewHolder.mTextView1.setText(currentItem.getArea());
         viewHolder.mTextView1.setText("Działka nr: " + currentItem.getNumber());
-        viewHolder.mTextView2.setText(currentItem.getName());
+        viewHolder.mTextView2.setText("Powierzchnia: " + currentItem.getArea() +"ha");
+        viewHolder.mTextView3.setText("\""+currentItem.getName()+"\"");
 
     }
 

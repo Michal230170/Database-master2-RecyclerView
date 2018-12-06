@@ -91,7 +91,7 @@ public class MainFieldsActivity extends AppCompatActivity {
         );
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        
+
 
 
 
