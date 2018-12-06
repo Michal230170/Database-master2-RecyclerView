@@ -32,9 +32,9 @@ public class MainFieldsActivity extends AppCompatActivity {
     private SimpleArrayAdapterFields adapter;
     private int userId;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<FieldRecords> fieldRecords;
+    private RecyclerViewAdapter mAdapter;
+   // private RecyclerView.LayoutManager mLayoutManager;
+   // private ArrayList<FieldRecords> fieldRecords;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -47,12 +47,13 @@ public class MainFieldsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        createList();
+        mRecyclerView = findViewById(R.id.fieldRecordsList);
 
 
 
 
 
+        //createList();
 
 
 
@@ -65,13 +66,6 @@ public class MainFieldsActivity extends AppCompatActivity {
         AppDatabase database = AppDatabase.getInstance(getApplicationContext());
 
         //listView = findViewById(R.id.fieldRecordsList); //field records list to nazwa list view
-        mRecyclerView = findViewById(R.id.fieldRecordsList);
-
-//mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new RecyclerViewAdapter(fieldRecords);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
 
         userId = getIntent().getIntExtra("userId", 0); // odczytujemy id uzytkownika
 
@@ -80,7 +74,14 @@ public class MainFieldsActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(@Nullable List<FieldRecords> fieldRecords) {
 
-                        buildRecyclerView();
+
+                        mAdapter = new RecyclerViewAdapter(fieldRecords);
+                        mRecyclerView.setAdapter(mAdapter);
+                       // mRecyclerView.setLayoutManager(mLayoutManager);
+                        //mAdapter.notifyDataSetChanged();
+
+
+
 
                       //  adapter = new SimpleArrayAdapterFields(getApplicationContext(),
                         //        (ArrayList<FieldRecords>) fieldRecords);
@@ -88,6 +89,16 @@ public class MainFieldsActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        
+
+
+
+
+
+
+
 
         /*listView.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
@@ -146,22 +157,24 @@ public class MainFieldsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void createList(){
+   /* public void createList()
+    {
         fieldRecords = new ArrayList<>();
-
     }
 
     public void buildRecyclerView(){
 
+
+
         //mRecyclerView.setHasFixedSize(true);
-      //  mLayoutManager = new LinearLayoutManager(this);
-        // mAdapter = new RecyclerViewAdapter(fieldRecords);
-
-      //  mRecyclerView.setLayoutManager(mLayoutManager);
-
+       // mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new RecyclerViewAdapter(fieldRecords);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(mAdapter);
-
     }
+*/
+
 
 
 }

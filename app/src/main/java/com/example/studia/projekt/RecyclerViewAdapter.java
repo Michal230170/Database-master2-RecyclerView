@@ -1,5 +1,6 @@
 package com.example.studia.projekt;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,25 +16,53 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    //private ArrayList<FieldRecords> values;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick (int i);
+    }
+
+    public void setOnClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
+
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView mTextView1;
         public TextView mTextView2;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mTextView1 = itemView.findViewById(R.id.textView);
-            mTextView2 = itemView.findViewById(R.id.textView2);
+        public ViewHolder(@NonNull View v, final OnItemClickListener listener) {
+            super(v);
+
+            mTextView1 = v.findViewById(R.id.number);
+            mTextView2 = v.findViewById(R.id.name);
+
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+                        int i = getAdapterPosition();
+                        if (i != RecyclerView.NO_POSITION){
+                            listener.onItemClick(i);
+                        }
+                    }
+
+                }
+            });
+
         }
     }
 
 
 
-    private List<FieldRecords> mValues;
+    private List<FieldRecords> values;
+
     public RecyclerViewAdapter(List<FieldRecords> values)
     {
-        mValues = values;
+        this.values = values;
     }
 
 
@@ -47,22 +76,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         View v= inflater.inflate(R.layout.section_item,viewGroup,false);
         //View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.section_item, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v, mListener);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        FieldRecords currentItem = mValues.get(i);
+        FieldRecords currentItem = values.get(i);
 
         //viewHolder.mTextView1.setText(currentItem.getArea());
-        viewHolder.mTextView1.setText(currentItem.getName());
+        viewHolder.mTextView1.setText("Działka nr: " + currentItem.getNumber());
         viewHolder.mTextView2.setText(currentItem.getName());
 
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return values.size();
     }
+
 }
