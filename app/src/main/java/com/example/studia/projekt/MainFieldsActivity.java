@@ -48,15 +48,7 @@ public class MainFieldsActivity extends AppCompatActivity {
 
 
         mRecyclerView = findViewById(R.id.fieldRecordsList);
-
-
-
-
-
-        //createList();
-
-
-
+        
 
         DrawerLayout mDrawerLayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
