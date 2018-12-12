@@ -6,12 +6,12 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 
-@Entity(tableName = "fieldrecordsField",
+@Entity(tableName = "sections",
         foreignKeys = @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "userId"))
-public class FieldRecords {
+public class Section {
 
     @PrimaryKey(autoGenerate = true)
-    private int recordFieldsId;   // ten nam zwraca recordFieldsId
+    private int sectionId;   // ten nam zwraca recordFieldsId
     private String number;
     private String area;
     private String name;
@@ -20,7 +20,7 @@ public class FieldRecords {
     // 2 konstruktory
 
     @Ignore
-    public FieldRecords(String number, String area, String name, int userId) {
+    public Section(String number, String area, String name, int userId) {
         this.number = number;
         this.area = area;
         this.name = name;
@@ -28,8 +28,8 @@ public class FieldRecords {
     }
 
 
-    public FieldRecords(int recordFieldsId, String number, String area, String name, int userId) {
-        this.recordFieldsId = recordFieldsId;
+    public Section(int sectionId, String number, String area, String name, int userId) {
+        this.sectionId = sectionId;
         this.number = number;
         this.area = area;
         this.name = name;
@@ -39,12 +39,12 @@ public class FieldRecords {
 
 
     //gettery i settery
-    public int getRecordFieldsId() {
-        return recordFieldsId;
+    public int getSectionId() {
+        return sectionId;
     }
 
-    public void setRecordFieldsId(int recordFieldsId) {
-        this.recordFieldsId = recordFieldsId;
+    public void setSectionId(int sectionId) {
+        this.sectionId = sectionId;
     }
 
     public String getNumber() {
@@ -78,12 +78,4 @@ public class FieldRecords {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
-   /* public int getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(int fieldId) {
-        this.fieldId = fieldId;
-    }*/
 }

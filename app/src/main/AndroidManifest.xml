@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,26 +22,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DodawanieActivity"
+            android:name=".ui.field.AddFieldActivity"
             android:label="Dodaj rekord"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".DetailsActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MainActivity"
-            android:parentActivityName=".MainFieldsActivity" />
+            android:parentActivityName=".ui.section.MainActivity"/>
+        <activity android:name=".ui.field.DetailsActivity"
+            android:parentActivityName=".ui.section.MainActivity"/>
+        <activity android:name=".ui.section.MainActivity"
+            android:parentActivityName=".ui.section.SectionsActivity" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".InfoActivity" />
-        <activity android:name=".RegistrActivity" />
+        <activity android:name=".ui.InfoActivity" />
+        <activity android:name=".ui.login.RegistrActivity" />
         <activity
-            android:name=".MainFieldsActivity"
+            android:name=".ui.section.SectionsActivity"
             android:label="@string/title_activity_main_fields"
-            android:parentActivityName=".LoginActivity"/>
+            android:parentActivityName=".ui.login.LoginActivity"/>
         <activity
-            android:name=".DodawanieFieldsActivity"
+            android:name=".ui.section.AddSectionActivity"
             android:label="@string/title_activity_dodawanie_fields"
-            android:parentActivityName=".MainFieldsActivity"/>
+            android:parentActivityName=".ui.section.SectionsActivity"/>
     </application>
 
 </manifest>
