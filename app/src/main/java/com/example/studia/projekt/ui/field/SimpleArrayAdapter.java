@@ -1,4 +1,4 @@
-package com.example.studia.projekt;
+package com.example.studia.projekt.ui.field;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.studia.projekt.R;
 import com.example.studia.projekt.db.model.FieldRecord;
 import java.util.ArrayList;
 
