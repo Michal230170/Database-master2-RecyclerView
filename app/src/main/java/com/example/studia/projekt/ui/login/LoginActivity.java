@@ -1,4 +1,4 @@
-package com.example.studia.projekt;
+package com.example.studia.projekt.ui.login;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.studia.projekt.R;
 import com.example.studia.projekt.db.AppDatabase;
 import com.example.studia.projekt.db.model.User;
+import com.example.studia.projekt.ui.section.SectionsActivity;
 import com.example.studia.projekt.utils.AppExecutors;
 
 public class LoginActivity extends AppCompatActivity {
@@ -67,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
           Toast.makeText(getApplicationContext(), "Zalogowano pomyślnie", Toast.LENGTH_SHORT)
               .show();
 
-          Intent intent = new Intent(LoginActivity.this, MainFieldsActivity.class);
+          Intent intent = new Intent(LoginActivity.this, SectionsActivity.class);
           intent.putExtra("userId", user.getId()); // przesyla doo mainfieldsactivity id uzytkownika
           startActivity(intent);
 

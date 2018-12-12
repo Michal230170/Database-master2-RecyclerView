@@ -1,32 +1,28 @@
-package com.example.studia.projekt;
+package com.example.studia.projekt.ui.section;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.studia.projekt.R;
 import com.example.studia.projekt.db.AppDatabase;
-import com.example.studia.projekt.db.model.FieldRecord;
-import com.example.studia.projekt.db.model.FieldRecords;
+import com.example.studia.projekt.db.model.Section;
 import com.example.studia.projekt.utils.AppExecutors;
 
-public class DodawanieFieldsActivity extends AppCompatActivity {
+public class AddSectionActivity extends AppCompatActivity {
 
     private AppDatabase database;
 
     private TextView editTextNumber;
     private TextView editTextArea;
     private TextView editTextName;
-
 
     private EditText getEditTextNumber;
     private EditText getEditTextArea;
@@ -37,7 +33,6 @@ public class DodawanieFieldsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodawanie_fields);
-     
 
         database = AppDatabase.getInstance(getApplicationContext());
         userId = getIntent().getIntExtra("userId", 0);
@@ -46,12 +41,12 @@ public class DodawanieFieldsActivity extends AppCompatActivity {
         editTextNumber.setOnClickListener(new View.OnClickListener() { //budowanie dialogu
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(DodawanieFieldsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddSectionActivity.this);
 
                 builder.setTitle("Wpisz nr działki");
 
                 // nowy edit text do dialog
-                getEditTextNumber = new EditText(DodawanieFieldsActivity.this);
+                getEditTextNumber = new EditText(AddSectionActivity.this);
                 getEditTextNumber.setInputType(InputType.TYPE_CLASS_NUMBER); //klawiatura numeryczna
                 builder.setView(getEditTextNumber);
 
@@ -63,7 +58,6 @@ public class DodawanieFieldsActivity extends AppCompatActivity {
                         //String txt = getEditTextArea.getText().toString();
 
                         editTextNumber.setText(getEditTextNumber.getText().toString());
-
                     }
                 });
 
@@ -85,12 +79,12 @@ public class DodawanieFieldsActivity extends AppCompatActivity {
         editTextName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(DodawanieFieldsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddSectionActivity.this);
                 builder.setTitle("Wpisz swoją nazwę");
 
                 //edit text do alertDialog
 
-                getEditTextName = new EditText(DodawanieFieldsActivity.this);
+                getEditTextName = new EditText(AddSectionActivity.this);
                 builder.setView(getEditTextName);
 
                 builder.setPositiveButton("Zatwierdź", new DialogInterface.OnClickListener() {
@@ -120,10 +114,10 @@ public class DodawanieFieldsActivity extends AppCompatActivity {
         editTextArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(DodawanieFieldsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddSectionActivity.this);
                 builder.setTitle("Wpisz powierzchnię działki [ha]");
 
-                getEditTextArea = new EditText(DodawanieFieldsActivity.this);
+                getEditTextArea = new EditText(AddSectionActivity.this);
                 builder.setView(getEditTextArea);
 
                 builder.setPositiveButton("Zatwierdź", new DialogInterface.OnClickListener() {
@@ -150,7 +144,7 @@ public class DodawanieFieldsActivity extends AppCompatActivity {
     public void addFieldRecord(View view) {
 
         if (editTextNumber.getText().toString().equals("") || editTextArea.getText().toString().equals("")
-                || editTextName.getText().toString().equals("") ){
+                || editTextName.getText().toString().equals("")) {
 
             Toast.makeText(this, "Uzupełnij pola",
                     Toast.LENGTH_SHORT).show();
@@ -161,20 +155,20 @@ public class DodawanieFieldsActivity extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    FieldRecords fieldRecord = new FieldRecords(
+                    Section section = new Section(
                             editTextNumber.getText().toString(),
                             editTextArea.getText().toString(),
                             editTextName.getText().toString(),
                             userId);
 
-                    database.fieldRecordDao().insert(fieldRecord);
+                    database.sectionDao().insert(section);
                 }
             });
 
             Toast.makeText(this, "Zapisano",
                     Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(DodawanieFieldsActivity.this, MainFieldsActivity.class);
+            Intent intent = new Intent(this, SectionsActivity.class);
             intent.putExtra("userId", userId);
             startActivity(intent);
             finish();

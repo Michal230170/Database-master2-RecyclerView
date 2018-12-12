@@ -1,4 +1,4 @@
-package com.example.studia.projekt;
+package com.example.studia.projekt.ui.login;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -10,6 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.studia.projekt.R;
 import com.example.studia.projekt.db.AppDatabase;
 import com.example.studia.projekt.db.model.User;
 import com.example.studia.projekt.utils.AppExecutors;

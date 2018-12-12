@@ -1,7 +1,9 @@
-package com.example.studia.projekt;
+package com.example.studia.projekt.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.studia.projekt.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
