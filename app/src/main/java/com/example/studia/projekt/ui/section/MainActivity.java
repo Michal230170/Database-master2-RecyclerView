@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,24 +23,34 @@ import com.example.studia.projekt.ui.SettingsActivity;
 import com.example.studia.projekt.ui.base.ViewModelProviderFactory;
 import com.example.studia.projekt.ui.field.AddFieldActivity;
 import com.example.studia.projekt.ui.field.DetailsActivity;
-import com.example.studia.projekt.ui.field.SimpleArrayAdapter;
+import com.example.studia.projekt.ui.field.FieldAdapter;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FieldAdapter.OnItemClickListener {
 
-    public ListView listView;            //przewijana lista to wszysko
+    //public ListView listView;            //przewijana lista to wszysko
     private ActionBarDrawerToggle mToggle;
-    private SimpleArrayAdapter adapter;
+   // private SimpleArrayAdapter adapter;
     private int sectionId;
+
+
+    //private ActionBarDrawerToggle mToggle;
+    private RecyclerView mRecyclerView;
+    private FieldAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_record);
 
         getSupportActionBar().setTitle("Lista spisów");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mRecyclerView = findViewById(R.id.fieldRecordsList);
 
         DrawerLayout mDrawerLayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -49,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         ViewModelProvider.Factory factory = new ViewModelProviderFactory<>(new MainActivityViewModel(getApplication()));
         MainActivityViewModel viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
 
-        listView = findViewById(R.id.fieldRecordsList); //field records list to nazwa list view
+        //listView = findViewById(R.id.fieldRecordsList); //field records list to nazwa list view
 
         sectionId = getIntent().getIntExtra("sectionId", 0);
 
@@ -57,14 +69,17 @@ public class MainActivity extends AppCompatActivity {
                 new Observer<List<FieldRecord>>() {
                     @Override
                     public void onChanged(@Nullable List<FieldRecord> fieldRecords) {
-                        adapter = new SimpleArrayAdapter(getApplicationContext(),
-                                (ArrayList<FieldRecord>) fieldRecords);
-                        listView.setAdapter(adapter);
+                        mAdapter.swapData(fieldRecords);
                     }
                 }
         );
 
-        listView.setOnItemClickListener((new AdapterView.OnItemClickListener() {
+        mAdapter = new FieldAdapter();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter.setOnClickListener(this);
+        mRecyclerView.setAdapter(mAdapter);
+
+       /* listView.setOnItemClickListener((new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final FieldRecord item = (FieldRecord) parent.getItemAtPosition(position);
@@ -81,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
                     String str = "aaa";
                 }
             }
-        }));
+        }));*/
+
+
+
     }
 
     @Override
@@ -114,6 +132,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void onclickInfo(MenuItem item) {
         Intent intent = new Intent(this, InfoActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        FieldRecord field = mAdapter.getField(position);
+        intent.putExtra("fieldId", field.getFieldId());
         startActivity(intent);
     }
 }

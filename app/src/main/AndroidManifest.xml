@@ -24,10 +24,12 @@
         <activity
             android:name=".ui.field.AddFieldActivity"
             android:label="Dodaj rekord"
-            android:parentActivityName=".ui.section.MainActivity"/>
-        <activity android:name=".ui.field.DetailsActivity"
-            android:parentActivityName=".ui.section.MainActivity"/>
-        <activity android:name=".ui.section.MainActivity"
+            android:parentActivityName=".ui.section.MainActivity" />
+        <activity
+            android:name=".ui.field.DetailsActivity"
+            android:parentActivityName=".ui.section.MainActivity" />
+        <activity
+            android:name=".ui.section.MainActivity"
             android:parentActivityName=".ui.section.SectionsActivity" />
         <activity
             android:name=".ui.SettingsActivity"
@@ -37,11 +39,15 @@
         <activity
             android:name=".ui.section.SectionsActivity"
             android:label="@string/title_activity_main_fields"
-            android:parentActivityName=".ui.login.LoginActivity"/>
+            android:parentActivityName=".ui.login.LoginActivity" />
         <activity
             android:name=".ui.section.AddSectionActivity"
             android:label="@string/title_activity_dodawanie_fields"
-            android:parentActivityName=".ui.section.SectionsActivity"/>
+            android:parentActivityName=".ui.section.SectionsActivity" />
+        <activity
+            android:name=".ui.section.EditSectionActivity"
+            android:label="@string/title_activity_edit_section"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

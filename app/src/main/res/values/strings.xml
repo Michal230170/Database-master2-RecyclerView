@@ -97,4 +97,5 @@
     <string name="informacje_o_aplikacji">Informacje o aplikacji</string>
     <string name="title_activity_main_fields">MainFieldsActivity</string>
     <string name="title_activity_dodawanie_fields">DodawanieFieldsActivity</string>
+    <string name="title_activity_edit_section">EditSectionActivity</string>
 </resources>

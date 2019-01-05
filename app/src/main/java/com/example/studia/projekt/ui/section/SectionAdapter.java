@@ -20,7 +20,11 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+
+        void OnItemLongClick(int adapterPosition);
     }
+
+
 
     public SectionAdapter() {
     }
@@ -51,6 +55,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
         return sections.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextView1;
@@ -70,6 +75,15 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
                     mListener.onItemClick(getAdapterPosition());
                 }
             });
+
+            v.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mListener.OnItemLongClick(getAdapterPosition());
+                    return false;
+                }
+            });
+
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.studia.projekt.db;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import com.example.studia.projekt.db.model.Section;
@@ -14,10 +15,15 @@ public interface SectionsDao {
     @Insert
     void insert(Section section);
 
+    @Delete
+    void delete(Section section);
+
+
     @Query("SELECT * FROM sections WHERE userId=:id")
     LiveData<List<Section>> findSectionsByUserId(int id);
 
     @Query("SELECT * FROM sections WHERE sectionId=:id")
     LiveData<Section> getSectionsById(int id);
+
 
 }

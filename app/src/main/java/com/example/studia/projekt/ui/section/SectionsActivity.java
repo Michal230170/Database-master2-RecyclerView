@@ -8,19 +8,26 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.studia.projekt.R;
+import com.example.studia.projekt.db.AppDatabase;
 import com.example.studia.projekt.db.model.Section;
 import com.example.studia.projekt.ui.InfoActivity;
 import com.example.studia.projekt.ui.SettingsActivity;
 import com.example.studia.projekt.ui.base.ViewModelProviderFactory;
+import com.example.studia.projekt.utils.AppExecutors;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 public class SectionsActivity extends AppCompatActivity implements SectionAdapter.OnItemClickListener {
 
@@ -28,6 +35,11 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
     private int userId;
     private RecyclerView mRecyclerView;
     private SectionAdapter mAdapter;
+    private EditText editText;
+
+    private List<Section> sections = new ArrayList<>();
+
+    private AppDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +48,8 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
 
         getSupportActionBar().setTitle("lista działek");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        database = AppDatabase.getInstance(getApplicationContext());
 
         mRecyclerView = findViewById(R.id.fieldRecordsList);
 
@@ -49,14 +63,16 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
         ViewModelProvider.Factory factory = new ViewModelProviderFactory<>(new SectionActivityViewModel(getApplication()));
         SectionActivityViewModel viewModel = ViewModelProviders.of(this, factory).get(SectionActivityViewModel.class);
 
-        viewModel.getSectionByUserId(userId).observe(this,
+        viewModel.getSectionByUserId(userId).observe(this, //getsectionbyuserid w klasie sectionViewModel
                 new Observer<List<Section>>() {
                     @Override
                     public void onChanged(@Nullable List<Section> sections) {
                         mAdapter.swapData(sections);
                     }
+
                 }
         );
+
 
         mAdapter = new SectionAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -99,11 +115,49 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
         startActivity(intent);
     }
 
+
     @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(this, MainActivity.class);
         Section section = mAdapter.getSection(position);
         intent.putExtra("sectionId", section.getSectionId());
         startActivity(intent);
+
     }
+
+    @Override
+    public void OnItemLongClick(final int adapterPosition) {
+
+
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(SectionsActivity.this);
+
+        builder.setTitle("Wpisz nr działki");
+
+        AlertDialog dialog = builder.create();
+        dialog.show();*/
+
+       /* AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Section section = mAdapter.getSection(adapterPosition);
+                database.sectionDao().delete(section);
+            }
+        });
+
+        Toast.makeText(this, "Usunięto",
+                Toast.LENGTH_SHORT).show();*/
+
+
+        Intent intent = new Intent(this, EditSectionActivity.class);
+        Section section = mAdapter.getSection(adapterPosition);
+        intent.putExtra("sectionId", section.getSectionId());
+
+        intent.putExtra("number", section.getNumber());
+        intent.putExtra("area", section.getArea());
+        intent.putExtra("name", section.getName());
+        startActivity(intent);
+
+
+    }
+
 }
