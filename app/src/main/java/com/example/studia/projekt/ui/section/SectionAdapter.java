@@ -56,6 +56,11 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     }
 
 
+    public Section getSectionAt(int position){
+        return sections.get(position);
+    }
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextView1;

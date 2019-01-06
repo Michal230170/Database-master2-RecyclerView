@@ -3,8 +3,10 @@ package com.example.studia.projekt.ui.section;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -78,6 +81,20 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.setOnClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
+
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+            database.sectionDao().delete(mAdapter.getSectionAt(viewHolder.getPosition()));
+            }
+        }).attachToRecyclerView(mRecyclerView);
+
     }
 
     @Override
@@ -129,12 +146,51 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
     public void OnItemLongClick(final int adapterPosition) {
 
 
-       /* AlertDialog.Builder builder = new AlertDialog.Builder(SectionsActivity.this);
+        final CharSequence[] kategorie = {"Edytuj", "Usuń"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Wybierz opcję:");
+        builder.setItems(kategorie, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strDate;
+                strDate = kategorie[which].toString();
 
-        builder.setTitle("Wpisz nr działki");
+                if (strDate == "Edytuj"){
 
-        AlertDialog dialog = builder.create();
-        dialog.show();*/
+                    Intent intent = new Intent(SectionsActivity.this, EditSectionActivity.class);
+                    //Intent intent = new Intent(this, EditSectionActivity.class);
+                    Section section = mAdapter.getSection(adapterPosition);
+
+                    intent.putExtra("sectionId", section.getSectionId());
+
+                    intent.putExtra("number", section.getNumber());
+                    intent.putExtra("area", section.getArea());
+                    intent.putExtra("name", section.getName());
+                    startActivity(intent);
+
+                }
+
+                else if (strDate == "Usuń"){
+
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Section section = mAdapter.getSection(adapterPosition);
+                            database.sectionDao().delete(mAdapter.getSection(adapterPosition));
+                        }
+                    });
+                    //mAdapter.notifyDataSetChanged();
+                   // mAdapter.notifyItemRemoved(adapterPosition);
+
+
+                }
+
+
+            }
+        });
+
+        builder.create();
+        builder.show();
 
        /* AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -148,16 +204,18 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
                 Toast.LENGTH_SHORT).show();*/
 
 
-        Intent intent = new Intent(this, EditSectionActivity.class);
+        /*Intent intent = new Intent(this, EditSectionActivity.class);
         Section section = mAdapter.getSection(adapterPosition);
         intent.putExtra("sectionId", section.getSectionId());
 
         intent.putExtra("number", section.getNumber());
         intent.putExtra("area", section.getArea());
         intent.putExtra("name", section.getName());
-        startActivity(intent);
+        startActivity(intent);*/
 
 
     }
+
+
 
 }

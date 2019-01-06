@@ -17,4 +17,7 @@ public class SectionActivityViewModel extends BaseViewModel {
     public LiveData<List<Section>> getSectionByUserId(int userId) {
         return getAppDatabase().sectionDao().findSectionsByUserId(userId);
     }
+    public LiveData<Section> getSectionById(int sectionId){
+        return getAppDatabase().sectionDao().getSectionsById(sectionId);
+    }
 }
