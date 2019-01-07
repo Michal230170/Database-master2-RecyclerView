@@ -97,6 +97,8 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+
+
     public Section getSection(int position) {
         return sections.get(position);
     }

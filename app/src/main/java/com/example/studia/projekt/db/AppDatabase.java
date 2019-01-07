@@ -5,6 +5,9 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import com.example.studia.projekt.db.Dao.FieldsDao;
+import com.example.studia.projekt.db.Dao.SectionsDao;
+import com.example.studia.projekt.db.Dao.UserDao;
 import com.example.studia.projekt.db.model.FieldRecord;
 import com.example.studia.projekt.db.model.Section;
 import com.example.studia.projekt.db.model.User;

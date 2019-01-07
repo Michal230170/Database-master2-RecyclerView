@@ -37,6 +37,10 @@ public class Section {
 
     }
 
+    public Section(){
+
+    }
+
 
     //gettery i settery
     public int getSectionId() {

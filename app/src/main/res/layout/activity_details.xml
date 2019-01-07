@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,116 +7,183 @@
 
     <TextView
         android:id="@+id/textViewDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textViewPlant"
-        android:layout_alignTop="@+id/textView10"
-        android:text="Text"
-        android:textSize="18sp" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="TextViewDate"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewPlant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textView12"
-        android:layout_marginEnd="108dp"
-        android:layout_marginTop="0dp"
-        android:text="Text"
-        android:textSize="18sp" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="TextViewPlant"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textViewArea" />
 
     <TextView
         android:id="@+id/textViewSubstance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textViewPlant"
-        android:layout_marginTop="186dp"
-        android:text="Text"
-        android:textSize="18sp" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="TextSubstance"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPlant" />
 
     <TextView
         android:id="@+id/textViewUsageReason"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textViewPlant"
-        android:layout_alignTop="@+id/textView14"
-        android:text="Large Text"
-        android:textSize="18sp" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="TextUsage"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSubstance" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="30dp"
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="30dp"
-        android:text="Data"
-        android:textSize="18sp" />
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="Data:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView10"
-        android:layout_marginTop="79dp"
-        android:text="Powierzchnia[ha]"
-        android:textSize="18sp" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="Powierzchnia [ha]:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView10"
-        android:layout_marginTop="133dp"
-        android:text="Roślina"
-        android:textSize="18sp" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="Roślina:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView10"
-        android:layout_alignTop="@+id/textViewSubstance"
-        android:text="Środek"
-        android:textSize="18sp" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="Środek:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView10"
-        android:layout_centerVertical="true"
-        android:text="Powód użycia"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textViewDate"
-        android:layout_alignTop="@+id/textViewDose"
-        android:text="TextView" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="Powód użycia:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textViewDose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView10"
-        android:layout_marginBottom="184dp"
-        android:text="Dawka" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="TextDose"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewDose"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUsageReason" />
+
+    <TextView
+        android:id="@+id/textViewDose"
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="Dawka [l/ha]:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
         android:id="@+id/textViewArea"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textView11"
-        android:layout_marginEnd="100dp"
-        android:text="TextView" />
+        android:layout_width="155dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_text"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:text="TextArea"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

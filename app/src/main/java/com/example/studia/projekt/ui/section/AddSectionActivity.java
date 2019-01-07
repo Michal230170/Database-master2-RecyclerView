@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,7 +72,11 @@ public class AddSectionActivity extends AppCompatActivity {
                 });
 
                 AlertDialog dialog = builder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
                 dialog.show();
+
+
             }
         });
 
@@ -106,6 +111,8 @@ public class AddSectionActivity extends AppCompatActivity {
                 });
 
                 AlertDialog dialog = builder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
                 dialog.show();
             }
         });
@@ -118,12 +125,13 @@ public class AddSectionActivity extends AppCompatActivity {
                 builder.setTitle("Wpisz powierzchnię działki [ha]");
 
                 getEditTextArea = new EditText(AddSectionActivity.this);
+                getEditTextArea.setInputType(InputType.TYPE_CLASS_NUMBER); //klawiatura numeryczna
                 builder.setView(getEditTextArea);
 
                 builder.setPositiveButton("Zatwierdź", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        editTextArea.setText(getEditTextArea.getText().toString());
+                        editTextArea.setText(getEditTextArea.getText().toString() + " ha");
                     }
                 });
 
@@ -135,6 +143,8 @@ public class AddSectionActivity extends AppCompatActivity {
                 });
 
                 AlertDialog dialog = builder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
                 dialog.show();
             }
         });

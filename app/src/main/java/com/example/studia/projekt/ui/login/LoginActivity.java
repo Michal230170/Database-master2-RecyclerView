@@ -3,13 +3,18 @@ package com.example.studia.projekt.ui.login;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.studia.projekt.R;
 import com.example.studia.projekt.db.AppDatabase;
@@ -23,11 +28,35 @@ public class LoginActivity extends AppCompatActivity {
   private EditText loginEditText;
   private EditText passwordEditText;
   private MutableLiveData<User> mutableLiveData;
+  private VideoView mVideoView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_login);
+   // setContentView(R.layout.activity_login);
+      setContentView(R.layout.video_view);
+
+      ActionBar actionBar = getSupportActionBar();
+      actionBar.hide();
+     // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
+      // wideo
+    mVideoView = (VideoView) findViewById(R.id.videoView2);
+
+    Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.farm);
+
+    mVideoView.setVideoURI(uri);
+    mVideoView.start();
+
+    mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            mp.setLooping(true);
+            mp.setVolume(0, 0);
+        }
+    });
+
 
     mutableLiveData = new MutableLiveData<>();
 
@@ -72,6 +101,8 @@ public class LoginActivity extends AppCompatActivity {
 
           Intent intent = new Intent(LoginActivity.this, SectionsActivity.class);
           intent.putExtra("userId", user.getId()); // przesyla doo mainfieldsactivity id uzytkownika
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
           startActivity(intent);
 
         } else {

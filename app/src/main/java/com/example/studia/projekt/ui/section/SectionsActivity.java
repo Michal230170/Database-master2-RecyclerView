@@ -8,13 +8,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -26,6 +30,7 @@ import com.example.studia.projekt.db.model.Section;
 import com.example.studia.projekt.ui.InfoActivity;
 import com.example.studia.projekt.ui.SettingsActivity;
 import com.example.studia.projekt.ui.base.ViewModelProviderFactory;
+import com.example.studia.projekt.ui.login.LoginActivity;
 import com.example.studia.projekt.utils.AppExecutors;
 
 import java.util.ArrayList;
@@ -38,11 +43,9 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
     private int userId;
     private RecyclerView mRecyclerView;
     private SectionAdapter mAdapter;
-    private EditText editText;
-
-    private List<Section> sections = new ArrayList<>();
-
     private AppDatabase database;
+
+    SectionActivityViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +66,9 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
 
         userId = getIntent().getIntExtra("userId", 0); // odczytujemy id uzytkownika
 
+
         ViewModelProvider.Factory factory = new ViewModelProviderFactory<>(new SectionActivityViewModel(getApplication()));
-        SectionActivityViewModel viewModel = ViewModelProviders.of(this, factory).get(SectionActivityViewModel.class);
+        final SectionActivityViewModel viewModel = ViewModelProviders.of(this, factory).get(SectionActivityViewModel.class);
 
         viewModel.getSectionByUserId(userId).observe(this, //getsectionbyuserid w klasie sectionViewModel
                 new Observer<List<Section>>() {
@@ -75,7 +79,6 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
 
                 }
         );
-
 
         mAdapter = new SectionAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -90,10 +93,21 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-            database.sectionDao().delete(mAdapter.getSectionAt(viewHolder.getPosition()));
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
+                // database.sectionDao().delete(mAdapter.getSectionAt(viewHolder.getPosition()));
+                //database.sectionDao().delete(mAdapter.getSection(viewHolder.getAdapterPosition()));
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int position = viewHolder.getAdapterPosition();
+                        database.sectionDao().delete(mAdapter.getSectionAt(position));
+                    }
+                });
+                // Section section = mAdapter.getSection(i);
+                // viewModel.delete(section);
             }
         }).attachToRecyclerView(mRecyclerView);
+
 
     }
 
@@ -151,11 +165,11 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
         builder.setTitle("Wybierz opcję:");
         builder.setItems(kategorie, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, final int which) {
                 String strDate;
                 strDate = kategorie[which].toString();
 
-                if (strDate == "Edytuj"){
+                if (strDate == "Edytuj") {
 
                     Intent intent = new Intent(SectionsActivity.this, EditSectionActivity.class);
                     //Intent intent = new Intent(this, EditSectionActivity.class);
@@ -168,20 +182,23 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
                     intent.putExtra("name", section.getName());
                     startActivity(intent);
 
-                }
-
-                else if (strDate == "Usuń"){
+                } else if (strDate == "Usuń") {
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
                             Section section = mAdapter.getSection(adapterPosition);
-                            database.sectionDao().delete(mAdapter.getSection(adapterPosition));
+                            //database.sectionDao().delete(mAdapter.getSection(adapterPosition));
+                            database.sectionDao().delete(section);
+                            //mAdapter.notifyItemRemoved(section);
                         }
                     });
-                    //mAdapter.notifyDataSetChanged();
-                   // mAdapter.notifyItemRemoved(adapterPosition);
 
+
+                    // mAdapter.notifyDataSetChanged();
+                    //mAdapter.notifyDataSetChanged();
+                    // mAdapter.notifyItemRemoved(adapterPosition);
+                    //mAdapter.swapData(sections);
 
                 }
 
@@ -189,8 +206,11 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
             }
         });
 
-        builder.create();
-        builder.show();
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
+        dialog.show();
+
+
 
        /* AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -213,9 +233,46 @@ public class SectionsActivity extends AppCompatActivity implements SectionAdapte
         intent.putExtra("name", section.getName());
         startActivity(intent);*/
 
+    }
+
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exitByBackKey();
+
+            //moveTaskToBack(false);
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    protected void exitByBackKey() {
+
+        AlertDialog alertbox = new AlertDialog.Builder(this)
+                .setMessage("Wylogować ?")
+                .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+
+                    // do something when the button is clicked
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                        Intent intent = new Intent(SectionsActivity.this, LoginActivity.class);
+                        startActivityForResult(intent,0);
+
+                    }
+                })
+                .setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+
+                    // do something when the button is clicked
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                })
+                .show();
 
     }
 
 
 
+
 }
+

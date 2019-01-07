@@ -1,5 +1,6 @@
 package com.example.studia.projekt.ui.field;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ public class AddFieldActivity extends AppCompatActivity {
     private EditText getEditUsage;
     private EditText getEditDose;
     private int sectionId;
+    private EditText addPlant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,8 @@ public class AddFieldActivity extends AppCompatActivity {
                 });
 
                 AlertDialog dialog = builder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
                 dialog.show();
             }
         });
@@ -115,6 +120,8 @@ public class AddFieldActivity extends AppCompatActivity {
                 });
 
                 AlertDialog dialog = builder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
                 dialog.show();
             }
         });
@@ -144,6 +151,8 @@ public class AddFieldActivity extends AppCompatActivity {
                 });
 
                 AlertDialog dialog = builder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
                 dialog.show();
             }
         });
@@ -153,15 +162,16 @@ public class AddFieldActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddFieldActivity.this);
-                builder.setTitle("Wpisz powód użycia środka");
+                builder.setTitle("Podaj dawkę [l/ha]");
 
                 getEditDose = new EditText(AddFieldActivity.this);
+                getEditTextArea.setInputType(InputType.TYPE_CLASS_NUMBER); //klawiatura numeryczna
                 builder.setView(getEditDose);
 
                 builder.setPositiveButton("Zatwierdź", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        editTextDose.setText(getEditDose.getText().toString() + "l/ha");
+                        editTextDose.setText(getEditDose.getText().toString() + " l/ha");
                     }
                 });
 
@@ -173,6 +183,8 @@ public class AddFieldActivity extends AppCompatActivity {
                 });
 
                 AlertDialog dialog = builder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
                 dialog.show();
             }
         });
@@ -188,7 +200,7 @@ public class AddFieldActivity extends AppCompatActivity {
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                com.wdullaer.materialdatetimepicker.date.DatePickerDialog dialog = com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+                final com.wdullaer.materialdatetimepicker.date.DatePickerDialog dialog = com.wdullaer.materialdatetimepicker.date.DatePickerDialog
                         .newInstance(
                                 new com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener() {
                                     @Override
@@ -205,6 +217,7 @@ public class AddFieldActivity extends AppCompatActivity {
                 dialog.show(getFragmentManager(), "DatePickerDialog");
 
 
+
             }
         });
         ////////////////////////////KONIEC KALENDARZA
@@ -212,7 +225,7 @@ public class AddFieldActivity extends AppCompatActivity {
 
     public void roslina(View view) {
         final CharSequence[] kategorie = {"pszenica", "jęczmień", "żyto", "rzepak", "kukurydza"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Wybierz roślinę");
         editTextPlant = findViewById(R.id.editTextArea);
         builder.setItems(kategorie, new DialogInterface.OnClickListener() {
@@ -221,11 +234,12 @@ public class AddFieldActivity extends AppCompatActivity {
                 String strDate;
                 strDate = kategorie[which].toString();
                 editTextPlant.setText(strDate);
-            }
-        });
+                    }
+                });
 
-        builder.create();
-        builder.show();
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_alert_dialog));
+        dialog.show();
     }
 
     public void addFieldRecord(View view) {

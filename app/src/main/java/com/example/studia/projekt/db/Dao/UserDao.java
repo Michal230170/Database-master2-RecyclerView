@@ -1,4 +1,4 @@
-package com.example.studia.projekt.db;
+package com.example.studia.projekt.db.Dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;

@@ -1,4 +1,4 @@
-package com.example.studia.projekt.db;
+package com.example.studia.projekt.db.Dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
