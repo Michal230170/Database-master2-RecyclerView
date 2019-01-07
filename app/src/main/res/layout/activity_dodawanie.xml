@@ -82,13 +82,14 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="47dp"
         android:layout_height="47dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:onClick="addFieldRecord"
         android:paddingLeft="10dip"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDose"
-        app:srcCompat="@android:drawable/ic_menu_save"
-        tools:layout_editor_absoluteX="321dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
     <TextView
         android:id="@+id/editTextUsage"
